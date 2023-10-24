@@ -12,6 +12,8 @@ import {currentUser as queryCurrentUser} from './services/ant-design-pro/api';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+
+
 const NO_NEED_LOGIN_WHITE_LIST = ['/user/register',loginPath]
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -37,20 +39,22 @@ export async function getInitialState(): Promise<{
   const fetchUserInfo = async () => {
     try {
       return await queryCurrentUser();
-    } catch (user) {
+    } catch (error) {
       history.push(loginPath);
     }
     return undefined;
   };
   // 如果不是白名单页面，执行
-  if (NO_NEED_LOGIN_WHITE_LIST.includes(location.pathname)) {
+  if (NO_NEED_LOGIN_WHITE_LIST.includes(history.location.pathname)) {
     return {
+      // @ts-ignore
       fetchUserInfo,
       settings: defaultSettings,
     };
   }
     const currentUser = await fetchUserInfo();
   return {
+    // @ts-ignore
     fetchUserInfo,
     currentUser,
     settings: defaultSettings,

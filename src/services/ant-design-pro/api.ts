@@ -1,3 +1,5 @@
+// @ts-ignore
+/* eslint-disable */
 /** 获取当前的用户 GET /api/user/current */
 import request from "@/plugins/globalRequest";
 
